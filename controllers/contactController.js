@@ -1,21 +1,32 @@
+ //async handler does the try catch function by it self
+ const asyncHandler = require("express-async-handler")
  //desc get all contact
  //@route GET /api/contacts
  //@access public
  
- const getContacts =((req,res)=>{
+ const getContacts = asyncHandler(async(req,res)=>{
         res.status(200).json({message:"Get all contacts"})
     });
 //desc creat all contact
 //@route POST /api/contacts
 //@access public
 
-const createContact = ((req,res)=>{
+const createContact = asyncHandler(async(req,res)=>{
     console.log("The request body is: ",req.body)
      const {name,email,phone} = req.body
      if(!name || !email || !phone){
-        res.send(400)
+        res.status(200)
         throw new Error("All field is mandatory.")
+        // res.json("Invalid credientals...")
      }
+    res.status(201).json({message:"New contact created."})
+})
+
+//desc get all contact
+//@route get /api/contacts
+//@access public
+
+const getContact = asyncHandler(async(req,res)=>{
     res.status(201).json({message:"Create all contact."})
 })
 
@@ -23,18 +34,10 @@ const createContact = ((req,res)=>{
 //@route get /api/contacts
 //@access public
 
-const getContact = ((req,res)=>{
-    res.status(201).json({message:"Create all contact."})
-})
-
-//desc get all contact
-//@route get /api/contacts
-//@access public
-
-const putContact = ((req,res)=>{
+const putContact = asyncHandler(async(req,res)=>{
     res.status(200).json({message:`Put contact for ${req.params.id}`})
 })
-const deleteContact = ((req,res)=>{
+const deleteContact = asyncHandler(async(req,res)=>{
     res.status(200).json({message:`Delete contact for ${req.params.id}`})
 })
 
