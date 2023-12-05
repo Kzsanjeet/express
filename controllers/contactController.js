@@ -1,11 +1,13 @@
  //async handler does the try catch function by it self
  const asyncHandler = require("express-async-handler")
+ const Contact = require("../models/contactModels")
  //desc get all contact
  //@route GET /api/contacts
  //@access public
  
  const getContacts = asyncHandler(async(req,res)=>{
-        res.status(200).json({message:"Get all contacts"})
+    const contacts = await Contact.find()
+    res.status(200).json(contacts)
     });
 //desc creat all contact
 //@route POST /api/contacts
@@ -19,7 +21,13 @@ const createContact = asyncHandler(async(req,res)=>{
         throw new Error("All field is mandatory.")
         // res.json("Invalid credientals...")
      }
-    res.status(201).json({message:"New contact created."})
+     const contact = await contact.create(
+        {
+            name,
+            email,
+            phone
+        })
+    res.status(201).json(contact)
 })
 
 //desc get all contact
