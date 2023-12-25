@@ -13,7 +13,8 @@ connectDb()
 // app.use(express.json());
 app.use(express.json())
 app.use("/",require("./routes/contactRoutes"))
-// app.use(errorHandler)
+app.use("/",require("./routes/userRoutes"))
+app.use(errorHandler)
 
 // Routes
 // app.get("/", (req, res) => {
