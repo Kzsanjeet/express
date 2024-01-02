@@ -84,12 +84,29 @@ const registerUser = asyncHandler(async (req, res) => {
  //@access public
  
  const loginUser = asyncHandler(async(req,res)=>{
-    res.json({message:"Login a user"});
+    // res.json({message:"Login a user"});
     const{email,password}=req.body;
     //validate inputs
     if(!email || !password){
         res.status(400);
         throw new Error("All fields are mandatory")
+    }
+    const user =await User.findOne({email:email})
+    // compare password with hashed password
+    if(user && (await bcrypt.compare(password, user.password))){
+        const accessToken = jwt.sign({
+            user:{
+                username:user.username,
+                email: user.email,
+                id:user.id
+            },
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        );
+         res.status(200).json({accessToken})
+    }else {
+        res.status(404);
+        throw new Error('Invalid Email or Password')
     }
 })
 
