@@ -47,7 +47,7 @@ const registerUser = asyncHandler(async (req, res) => {
     if (!username || !email || !password) {
         res.status(400);
         throw new Error('All fields are mandatory!');
-    }
+    }   
     try {
         const userInUse = await User.findOne({ email: email });
         if (userInUse) {

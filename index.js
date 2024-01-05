@@ -14,7 +14,6 @@ connectDb()
 app.use(express.json())
 app.use("/",require("./routes/contactRoutes"))
 app.use("/",require("./routes/userRoutes"))
-app.use("/",require("./validateTokenHandler"))
 app.use(errorHandler)
 
 // Routes
